@@ -47,6 +47,7 @@
             this.textLog = new System.Windows.Forms.TextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.BtnOpenImageFolder = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -139,6 +140,7 @@
             // 
             // tabDiscord
             // 
+            this.tabDiscord.Controls.Add(this.BtnOpenImageFolder);
             this.tabDiscord.Controls.Add(this.BtnSelectImageSaveFolder);
             this.tabDiscord.Controls.Add(this.textImageSaveFolder);
             this.tabDiscord.Controls.Add(this.btnTakeScreenshot);
@@ -157,7 +159,7 @@
             // BtnSelectImageSaveFolder
             // 
             this.BtnSelectImageSaveFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnSelectImageSaveFolder.Location = new System.Drawing.Point(531, 82);
+            this.BtnSelectImageSaveFolder.Location = new System.Drawing.Point(451, 82);
             this.BtnSelectImageSaveFolder.Name = "BtnSelectImageSaveFolder";
             this.BtnSelectImageSaveFolder.Size = new System.Drawing.Size(29, 31);
             this.BtnSelectImageSaveFolder.TabIndex = 6;
@@ -171,8 +173,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textImageSaveFolder.Location = new System.Drawing.Point(124, 81);
             this.textImageSaveFolder.Name = "textImageSaveFolder";
-            this.textImageSaveFolder.Size = new System.Drawing.Size(397, 29);
+            this.textImageSaveFolder.Size = new System.Drawing.Size(321, 29);
             this.textImageSaveFolder.TabIndex = 5;
+            this.textImageSaveFolder.TextChanged += new System.EventHandler(this.textImageSaveFolder_TextChanged);
             // 
             // btnTakeScreenshot
             // 
@@ -261,6 +264,17 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
+            // BtnOpenImageFolder
+            // 
+            this.BtnOpenImageFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnOpenImageFolder.Location = new System.Drawing.Point(485, 82);
+            this.BtnOpenImageFolder.Name = "BtnOpenImageFolder";
+            this.BtnOpenImageFolder.Size = new System.Drawing.Size(75, 31);
+            this.BtnOpenImageFolder.TabIndex = 7;
+            this.BtnOpenImageFolder.Text = "Open";
+            this.BtnOpenImageFolder.UseVisualStyleBackColor = true;
+            this.BtnOpenImageFolder.Click += new System.EventHandler(this.BtnOpenImageFolder_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -311,5 +325,6 @@
         private Button btnTakeScreenshot;
         private Button BtnSelectImageSaveFolder;
         private TextBox textImageSaveFolder;
+        private Button BtnOpenImageFolder;
     }
 }

@@ -1,73 +1,55 @@
 using Microsoft.Web.WebView2.Core;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using WebViewLib;
 
 namespace WebViewTest
 {
     public partial class Form1 : Form
     {
+        private Page _page;
         public Form1()
         {
             InitializeComponent();
-            //this.Resize += new System.EventHandler(this.Form_Resize);
-            if (wv.CoreWebView2 != null)
+            Startup();
+        }
+
+        private void Startup()
+        {
+            int step = 10;
+            try
             {
-                wv.CoreWebView2.NavigationStarting += EnsureHttps;
-                wv.CoreWebView2.SourceChanged += SourceChanged;
-                wv.CoreWebView2.ContentLoading += ContentLoading;
-                wv.CoreWebView2.HistoryChanged += HistoryChanged;
-                wv.CoreWebView2.NavigationCompleted += NavigationCompleted;
+                _page = new Page(wv);
+                step = 20;
+                _page.StatusMessageHandler = Status;
+                step = 30;
+                _page.SaveFolder = @"C:\Users\joe\Desktop\folder\images\discord";
+                step = 40;
+                textImageSaveFolder.Text = _page.SaveFolder;
+                step = 50;
+                Environment.CurrentDirectory = _page.SaveFolder;
+                step = 60;
+                Status($"Set currentDirectory to {_page.SaveFolder}");
+            }
+            catch (Exception ex)
+            {
+                string msg = $"WebViewTest.Startup() @ [{step}] EXCEPTION {ex.Message}";
+                Status(msg);
+                System.Windows.MessageBox.Show(msg);
             }
         }
 
-        private void SourceChanged(object? sender, CoreWebView2SourceChangedEventArgs e)
-        {
-            Status($"SourceChanged");
-            textUrl.Text = $"{wv.Source.ToString()}";
-
-        }
-
-        private void ContentLoading(object? sender, CoreWebView2ContentLoadingEventArgs e)
-        {
-            Status($"ContentLoading");
-
-        }
-
-        private void HistoryChanged(object? sender, object e)
-        {
-            Status($"HistoryChanged");
-        }
-
-        private void EnsureHttps(object? sender, CoreWebView2NavigationStartingEventArgs e)
-        {
-            String uri = e.Uri;
-            if (!uri.StartsWith("https://"))
-            {
-                wv.CoreWebView2.ExecuteScriptAsync($"alert('{uri} is not safe, try an https link')");
-                e.Cancel = true;
-            }
-        }
-
-        private void NavigationCompleted(object? sender, CoreWebView2NavigationCompletedEventArgs e)
-        {
-            string err = $"{e.WebErrorStatus}";
-            Status($"NavigationCompleted {err}");
-        }
-
-        private void Form_Resize(object sender, EventArgs e)
-        {
-            wv.Size = this.ClientSize - new System.Drawing.Size(wv.Location);
-            btnGo.Left = this.ClientSize.Width - btnGo.Width;
-            textUrl.Width = btnGo.Left - textUrl.Left;
-        }
+        //private void Form_Resize(object sender, EventArgs e)
+        //{
+        //    wv.Size = this.ClientSize - new System.Drawing.Size(wv.Location);
+        //    btnGo.Left = this.ClientSize.Width - btnGo.Width;
+        //    textUrl.Width = btnGo.Left - textUrl.Left;
+        //}
 
         private void btnGo_Click(object sender, EventArgs e)
         {
-            if (wv != null && wv.CoreWebView2 != null)
-            {
-                Status($"navigate to {textUrl.Text}");
-                wv.CoreWebView2.Navigate(textUrl.Text);
-            }
+            _page.NavigateTo(textUrl.Text);
         }
 
         private void Status(string msg)
@@ -89,33 +71,15 @@ namespace WebViewTest
             GetDocumentTitle();
         }
 
-        private async void GetDocumentTitle()
-        { 
-            await wv.EnsureCoreWebView2Async();
-            textDocumentTitle.Text = wv.CoreWebView2.DocumentTitle.ToString();
+        private void GetDocumentTitle()
+        {
+            textDocumentTitle.Text = _page.DocumentTitle();
+            textDocumentTitle.Refresh();
         }
 
-        private async void btnTakeScreenshot_Click(object sender, EventArgs e)
+        private void btnTakeScreenshot_Click(object sender, EventArgs e)
         {
-            TakeScreenshot();
-        }
-
-        private async void TakeScreenshot()
-        {
-            using (MemoryStream stream = new MemoryStream())
-            //using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
-            {
-                await wv.CoreWebView2.CapturePreviewAsync(CoreWebView2CapturePreviewImageFormat.Png, stream);
-                stream.Seek(0, SeekOrigin.Begin);
-
-                // here you can add saving to a file or copying to clipboard
-                string filename = Path.Combine(textImageSaveFolder.Text, $"{DateTime.Now.ToString("hhmmssfff")}_screenshot.png");
-                using (FileStream fs = new FileStream(filename, FileMode.OpenOrCreate))
-                {
-                    stream.CopyTo(fs);
-                    fs.Flush();
-                }
-            }
+            _page.TakeScreenshot();
         }
 
 
@@ -127,6 +91,31 @@ namespace WebViewTest
             {
                 textImageSaveFolder.Text = folder.SelectedPath; 
                 textImageSaveFolder.Refresh();
+            }
+        }
+
+        private void textImageSaveFolder_TextChanged(object sender, EventArgs e)
+        {
+                _page.SaveFolder = textImageSaveFolder.Text;
+        }
+
+        private void BtnOpenImageFolder_Click(object sender, EventArgs e)
+        {
+            int step = 10;
+            try
+            { 
+                if (Directory.Exists(textImageSaveFolder.Text))
+                {
+                    step = 20;
+                    // have to add "explorer.exe", where dotNet Framework did not need that 
+                    Process.Start("explorer.exe", textImageSaveFolder.Text);
+                }
+            }
+            catch (Exception ex)
+            {
+                string msg = $"WebViewTest.BtnOpenImageFolder_Click() @ [{step}] EXCEPTION {ex.Message}";
+                Status(msg);
+                System.Windows.MessageBox.Show(msg);
             }
         }
     }
