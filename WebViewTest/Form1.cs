@@ -1,4 +1,6 @@
 using Microsoft.Web.WebView2.Core;
+using System.IO;
+using System.Windows;
 
 namespace WebViewTest
 {
@@ -20,7 +22,7 @@ namespace WebViewTest
 
         private void SourceChanged(object? sender, CoreWebView2SourceChangedEventArgs e)
         {
-            Status($"SouorceChanged");
+            Status($"SourceChanged");
             textUrl.Text = $"{wv.Source.ToString()}";
 
         }
@@ -76,5 +78,56 @@ namespace WebViewTest
             textLog.Refresh();
         }
 
+        private void BtnGoToDiscord_Click(object sender, EventArgs e)
+        {
+            textUrl.Text = "https://discord.gg";
+            btnGo_Click(sender, e);
+        }
+
+        private void BtnGetTitle_Click(object sender, EventArgs e)
+        {
+            GetDocumentTitle();
+        }
+
+        private async void GetDocumentTitle()
+        { 
+            await wv.EnsureCoreWebView2Async();
+            textDocumentTitle.Text = wv.CoreWebView2.DocumentTitle.ToString();
+        }
+
+        private async void btnTakeScreenshot_Click(object sender, EventArgs e)
+        {
+            TakeScreenshot();
+        }
+
+        private async void TakeScreenshot()
+        {
+            using (MemoryStream stream = new MemoryStream())
+            //using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
+            {
+                await wv.CoreWebView2.CapturePreviewAsync(CoreWebView2CapturePreviewImageFormat.Png, stream);
+                stream.Seek(0, SeekOrigin.Begin);
+
+                // here you can add saving to a file or copying to clipboard
+                string filename = Path.Combine(textImageSaveFolder.Text, $"{DateTime.Now.ToString("hhmmssfff")}_screenshot.png");
+                using (FileStream fs = new FileStream(filename, FileMode.OpenOrCreate))
+                {
+                    stream.CopyTo(fs);
+                    fs.Flush();
+                }
+            }
+        }
+
+
+        private void BtnSelectImageSaveFolder_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folder = new FolderBrowserDialog();
+            folder.SelectedPath = textImageSaveFolder.Text;
+            if (folder.ShowDialog() == DialogResult.OK)
+            {
+                textImageSaveFolder.Text = folder.SelectedPath; 
+                textImageSaveFolder.Refresh();
+            }
+        }
     }
 }
