@@ -1,18 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
-	  <UseWPF>true</UseWPF>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <ApplicationIcon>cer.ico</ApplicationIcon>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Content Include="cer.ico" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1150.38" />
@@ -20,12 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebViewLib\WebViewLib.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Javascript\TestButtonClick.js">
-      <SubType>Code</SubType>
-    </None>
   </ItemGroup>
 
 </Project>

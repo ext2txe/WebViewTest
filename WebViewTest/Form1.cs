@@ -118,5 +118,43 @@ namespace WebViewTest
                 System.Windows.MessageBox.Show(msg);
             }
         }
+
+        private async void Form1_Load(object sender, EventArgs e)
+        {
+            //show MS Edge version -- also ensures that an exception will be raised if proper MS Edge version isn't installed
+            Debug.WriteLine(CoreWebView2Environment.GetAvailableBrowserVersionString());
+
+            //initialized CorewWebView2
+            await InitializeCoreWebView2Async();
+
+            //get HTML
+            string html = HelperLoadResource.ReadResource("index.html");
+
+            //display HTML in WebView2
+            wv.NavigateToString(html);
+        }
+
+        private async Task InitializeCoreWebView2Async()
+        {
+            //initialize CorewWebView2
+            await wv.EnsureCoreWebView2Async();
+        }
+
+        private void BtnGetButton_Click(object sender, EventArgs e)
+        {
+            _page.ClickButtonWithInnerText(textButtonInnerText.Text);
+        }
+
+        private void wv_CoreWebView2InitializationCompleted(object sender, CoreWebView2InitializationCompletedEventArgs e)
+        {
+            //subscribe to CoreWebView2 events (add event handlers)
+            wv.CoreWebView2.WebMessageReceived += CoreWebView2_WebMessageReceived;
+        }
+
+        private void CoreWebView2_WebMessageReceived(object? sender, CoreWebView2WebMessageReceivedEventArgs e)
+        {
+            Debug.WriteLine("Info: MSG (JSON): " + e.WebMessageAsJson);
+            Debug.WriteLine("Info: MSG (String): " + e.TryGetWebMessageAsString());
+        }
     }
 }

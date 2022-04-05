@@ -1,5 +1,6 @@
 ﻿using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.WinForms;
+using System.Diagnostics;
 
 namespace WebViewLib
 {
@@ -12,7 +13,7 @@ namespace WebViewLib
         public delegate void StatusMessageDelegate(string message);
         public StatusMessageDelegate StatusMessageHandler { get; set; }
 
-        private WebView2 _wv;
+        protected WebView2 _wv;
 
         private string _saveFolder = "";
         /// <summary>
@@ -30,27 +31,22 @@ namespace WebViewLib
             _saveFolder = value;
         }
 
-        /// <summary>
-        /// placeholder for webview application - project specific page type enum
-        /// </summary>
-        public string PageType { get; set; }
         
         /// <summary>
         /// find a better way to handle nullable delegate,
         /// for now set status message handler to this initially
         /// </summary>
         /// <param name="message"></param>
-        private void StupidDoNothingMethod(string message) {}
+        protected void StupidDoNothingMethod(string message) {}
 
         public Page(WebView2 webView)
         {
-            PageType = "default";
             _wv = webView;
             StatusMessageHandler = StupidDoNothingMethod;
             Initialize(webView);
         }
 
-        private async void Initialize(WebView2 webview)
+        protected async void Initialize(WebView2 webview)
         {
             int step = 10;
             try
@@ -141,6 +137,47 @@ namespace WebViewLib
             }
         }
 
+        private async Task InitializeCoreWebView2Async()
+        {
+            //initialize CorewWebView2
+            await _wv.EnsureCoreWebView2Async();
+        }
 
+
+        private async void LoadJavascript(object sender, EventArgs e)
+        {
+            //show MS Edge version -- also ensures that an exception will be raised if proper MS Edge version isn't installed
+            Debug.WriteLine(CoreWebView2Environment.GetAvailableBrowserVersionString());
+
+            //initialized CorewWebView2
+            await InitializeCoreWebView2Async();
+
+            //get HTML
+            string html = HelperLoadResource.ReadResource("index.html");
+
+            _wv.NavigateToString(html);
+
+        }
+        public async void ClickButtonWithInnerText(string innerText)
+        {
+            int step = 10;
+            try
+            {
+                string jsCode = HelperLoadResource.ReadResource("TestButtonClick.js");
+                jsCode += System.Environment.NewLine;
+                jsCode += "clickDesiredButtonByInnerText('" + innerText + "');";
+
+
+                var result = await _wv.CoreWebView2.ExecuteScriptAsync(jsCode);
+
+                Debug.WriteLine("result: " + result);
+            }
+            catch (Exception ex)
+            {
+                string msg = $"WebViewLib.ClickButtonWithInnerText() @ [{step}] EXCEPTION {ex.Message}";
+                Status(msg);
+                throw new Exception(msg);
+            }
+        }
     }
 }
