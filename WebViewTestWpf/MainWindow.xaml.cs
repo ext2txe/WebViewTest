@@ -17,6 +17,7 @@ namespace WebViewTestWpf
     {
         private WebViewSettings _settings;
         private WebViewLibMF.Page _page;
+        private WebViewLibMF.Page _page2;
 
         public MainWindow()
         {
@@ -45,6 +46,7 @@ namespace WebViewTestWpf
                 step = 80;
                 Environment.CurrentDirectory = saveFolder;
                 step = 90;
+                InitializeTimers();
                 //Status($"Set currentDirectory to {saveFolder}");
                 
             }
@@ -83,6 +85,44 @@ namespace WebViewTestWpf
             {
                 txtImageSaveFolder.Text = folder.SelectedPath;
                 txtImageSaveFolder.Refresh();
+            }
+        }
+
+        private void wv3_Drop(object sender, System.Windows.DragEventArgs e)
+        {
+            int step = 10;
+            try
+            {
+                string url = e.Data.ToString();
+                txtUrl2.Text = url;
+                GoButton2_Click(sender, null);
+            }
+            catch (Exception ex)
+            {
+                string msg = $"WebViewTestWpf.MainWindow.wv3_Drop() @ [{step}]{Environment.NewLine}EXCEPTION :[{ex.Message}]";
+                throw new Exception(msg);
+            }
+        }
+
+        private void GoButton2_Click(object sender, RoutedEventArgs e)
+        {
+            int step = 10;
+            try
+            {
+                if (_page2 == null)
+                {
+                    step = 20;
+                    _page2 = new WebViewLibMF.Page(wv2);
+                    step = 30;
+                    _page2.StatusMessageHandler = Status;
+                }
+                step = 40;
+                _page2.NavigateTo(txtUrl2.Text);
+            }
+            catch (Exception ex)
+            {
+                string msg = $"WebViewTestWpf.MainWindow.wv3_Drop() @ [{step}]{Environment.NewLine}EXCEPTION :[{ex.Message}]";
+                throw new Exception(msg);
             }
         }
     }

@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using System;
 using BaseLib;
 using System.Windows.Forms;
+using System.Windows;
 
 namespace WebViewLibMF
 {
-    public class Page
+    public partial class Page
     {
         /// <summary>
         /// configure handler for delegate to receive status messages from this class
@@ -71,6 +72,29 @@ namespace WebViewLibMF
                     _wv.CoreWebView2.HistoryChanged += HistoryChanged;
                     step = 70;
                     _wv.CoreWebView2.NavigationCompleted += NavigationCompleted;
+                    step = 80;
+                    _wv.CoreWebView2.NewWindowRequested += NewWindowRequested;
+                    step = 90;
+                    _wv.AllowDrop = true;
+                    step = 100;
+                    _wv.DragEnter += DragEnter;
+                    step = 110;
+                    _wv.DragLeave += DragLeave;
+                    step = 120;
+                    _wv.Drop += Drop;
+                    step = 130;
+                    _wv.DragOver += DragOver;
+                    step = 140;
+                    _wv.PreviewDragEnter += PreviewDragEnter;
+                    step = 150;
+                    _wv.PreviewDragLeave += PreviewDragLeave;
+                    step = 160;
+                    _wv.PreviewDrop += PreviewDrop;
+                    step = 130;
+                    _wv.PreviewDragOver += PreviewDragOver;
+
+
+
                 }
                 else
                 {
@@ -84,6 +108,52 @@ namespace WebViewLibMF
                 Status(msg);
                 throw new Exception(msg);
             }
+        }
+
+        private void PreviewDragOver(object sender, System.Windows.DragEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void PreviewDrop(object sender, System.Windows.DragEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void PreviewDragLeave(object sender, System.Windows.DragEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void PreviewDragEnter(object sender, System.Windows.DragEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void DragOver(object sender, System.Windows.DragEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Drop(object sender, System.Windows.DragEventArgs e)
+        {
+            string data = (string) e.Data.GetData(System.Windows.DataFormats.StringFormat);
+            _wv.NavigateToString(data);
+        }
+
+        private void DragLeave(object sender, System.Windows.DragEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void DragEnter(object sender, System.Windows.DragEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void NewWindowRequested(object sender, CoreWebView2NewWindowRequestedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void Status(string message)
@@ -133,8 +203,18 @@ namespace WebViewLibMF
 
         public void NavigateTo(string url)
         {
-            _wv.CoreWebView2.Navigate(url);
-            Status($"navigate to {url}");
+            int step = 10;
+            try
+            {
+                _wv.CoreWebView2.Navigate(url);
+                step = 20;
+                Status($"navigate to {url}");
+            }
+            catch (Exception ex)
+            {
+                string msg = $"WebViewTest.WebViewLibMF.Page() @ [{step}] {Environment.NewLine} EXCEPTION {ex.Message}";
+                System.Windows.Forms.MessageBox.Show(msg);
+            }
         }
 
         public string DocumentTitle()

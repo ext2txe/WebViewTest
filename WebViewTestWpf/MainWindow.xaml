@@ -7,33 +7,55 @@
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
+        AllowDrop="True"
         >
 
-    <Grid Background="Teal">
+    <!-- <Grid Background="Teal"> -->
+    <!-- use grid background colours to isolate layout issues-->
+    <Grid>
+        <!--<Grid.ColumnDefinitions>
+            <ColumnDefinition Width="149*"/>
+            <ColumnDefinition Width="251*"/>
+        </Grid.ColumnDefinitions>-->
         <Grid.RowDefinitions>
-            <RowDefinition Height="0" />  <!-- header panel -->
-            <RowDefinition Height="*" />    <!-- main panel -->
-            <RowDefinition Height="30" />  <!-- footer panel -->
+            <RowDefinition Height="0" />
+            <!-- header panel -->
+            <RowDefinition Height="*" />
+            <!-- main panel -->
+            <RowDefinition Height="30" />
+            <!-- footer panel -->
         </Grid.RowDefinitions>
-        
-        <!-- header --> <!-- not used for now -->
-        <Grid Background="Green" Grid.Row="0" Grid.Column="0" Height="0" Visibility="Collapsed" />
+
+        <!-- header -->
+        <!-- not used for now -->
+        <!-- <Grid Background="Green" Grid.Row="0" Grid.Column="0" Height="0" Visibility="Collapsed" /> -->
+        <Grid Grid.Row="0" Grid.Column="0" Height="0" Visibility="Collapsed" Grid.ColumnSpan="2" Margin="0,0,0,404" Grid.RowSpan="2" />
 
         <!-- main panel, divided into two horizontal panels with a splitter -->
-        <Grid Background="LightBlue" Grid.Row="1" Grid.Column="0">
+        <!-- <Grid Background="LightBlue" Grid.Row="1" Grid.Column="0"> -->
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
 
             <!-- main panel has 3 columns -->
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />  <!-- 0: Left panel -->
-                <ColumnDefinition Width="5" />  <!-- 1: splitter handle -->
-                <ColumnDefinition Width="*" />  <!-- 2"Right panel -->
+                <ColumnDefinition Width="*" />
+                <!-- 0: Left panel -->
+                <ColumnDefinition Width="5" />
+                <!-- 1: splitter handle -->
+                <ColumnDefinition Width="*" />
+                <!-- 2"Right panel -->
             </Grid.ColumnDefinitions>
 
-            <Grid Background="pink" Grid.Row="0" Grid.Column="0">     <!-- LEFT panel -->
+            <!-- <Grid Background="pink" Grid.Row="0" Grid.Column="0"> -->
+            <!-- LEFT panel -->
+            <Grid Grid.Row="0" Grid.Column="0">
+                <!-- LEFT panel -->
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="30" />   <!-- 0: url selector -->
-                    <RowDefinition Height="*" />    <!-- 1: Tab control with browser pages-->
-                    <RowDefinition Height="30" />   <!-- 2: status line (maybe) -->
+                    <RowDefinition Height="30" />
+                    <!-- 0: url selector -->
+                    <RowDefinition Height="*" />
+                    <!-- 1: Tab control with browser pages-->
+                    <RowDefinition Height="30" />
+                    <!-- 2: status line (maybe) -->
                 </Grid.RowDefinitions>
 
                 <!-- url selector -->
@@ -49,21 +71,25 @@
 
                     <!-- url selector -->
                     <Label Grid.Column="0" Content="Url:" HorizontalAlignment="Right"  Padding="2" Margin="2" />
-                    <TextBox Grid.Column="1" Name="txtUrl" TextChanged="txtUrl_TextChanged" Padding="2" Margin="2" />
+                    <TextBox Grid.Column="1" Name="txtUrl" TextChanged="txtUrl_TextChanged" Text="https://upwork.com" Padding="2" Margin="2" />
                     <Button Grid.Column="2" Content="Go!" Click="GoButton_Click" Padding="2" Margin="2" />
                 </Grid>
 
                 <!-- tab control with browser pages -->
                 <TabControl Grid.Row="1" Grid.Column="0">
-                        <TabItem Header="Browser 1">
-                            <wv2:WebView2 Name="wv" Source="https://dev.codaland.com/ipcheck.php" />
-                        </TabItem>
-                        <TabItem Header="Browser 2" />
+                    <TabItem Header="Browser 1">
+                        <wv2:WebView2 Name="wv" Source="https://duckduckgo.com" />
+                    </TabItem>
+                    <TabItem Header="Browser 2" >
+                        <wv2:WebView2 Name="wv2" Source="https://duckduckgo.com" />
+                    </TabItem>
+
                 </TabControl>
-                
+
             </Grid>
 
-            <Grid Grid.Row="0" Grid.Column="1" />   <!-- splitter handle-->
+            <Grid Grid.Row="0" Grid.Column="1" />
+            <!-- splitter handle-->
 
             <Grid Grid.Row="0" Grid.Column="2">
                 <!-- RIGHT panel Row 0 Application Targets and settings -->
@@ -78,7 +104,7 @@
                                 <RowDefinition Height="30" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="120" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="50" />
                             </Grid.ColumnDefinitions>
@@ -92,13 +118,48 @@
                             <TextBox Grid.Column="1" Name="txtLog" IsReadOnly="True" TextChanged="txtUrl_TextChanged" Padding="2" Margin="2" />
                         </Grid>
                     </TabItem>
+                    <TabItem Header="Browser" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="30" />
+                            </Grid.RowDefinitions>
+
+                            <!-- url selector -->
+                            <Grid Grid.Row="0" Grid.Column="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50" />
+                                    <!-- 0: "Url:"-->
+                                    <ColumnDefinition Width="*" />
+                                    <!-- 1: https://... -->
+                                    <ColumnDefinition Width="50" />
+                                    <!-- 2: Go! button -->
+                                </Grid.ColumnDefinitions>
+
+                                <!-- url selector -->
+                                <Label Grid.Column="0" Content="Url:" HorizontalAlignment="Right"  Padding="2" Margin="2" />
+                                <TextBox Grid.Column="1" Name="txtUrl2" TextChanged="txtUrl_TextChanged" Padding="2" Margin="2" />
+                                <Button Grid.Column="2" Content="Go!" Click="GoButton2_Click" Padding="2" Margin="2" />
+                            </Grid>
+
+
+
+                            <wv2:WebView2 
+                                Grid.Row="1" 
+                                Name="wv3" 
+                                Source="https://duckduckgo.com" Drop="wv3_Drop" />
+                        </Grid>
+                    </TabItem>
+
                 </TabControl>
             </Grid>
         </Grid>
-        
+
         <!-- footer panel -->
-        <Grid Background="LightYellow"
-            Grid.Row="2" Grid.Column="0">
+        <!--<Grid Background="LightYellow" -->
+        <Grid Background="LightYellow"            
+            Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,404,0,0" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50" />
                 <!-- status 'label'-->
@@ -119,8 +180,9 @@
                 HorizontalAlignment="Stretch" />
 
             <Label Grid.Column="2"
-                   Content="HH:MM:SS"
-                   HorizontalAlignment="Left" />
+                Name="lblCurrentTime"
+                Content="HH:MM:SS"
+                HorizontalAlignment="Left" />
         </Grid>
     </Grid>
 </Window>

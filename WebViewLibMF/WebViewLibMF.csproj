@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HelperLoadResource.cs" />
+    <Compile Include="Page.DragDrop.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebViewSettings.cs" />
