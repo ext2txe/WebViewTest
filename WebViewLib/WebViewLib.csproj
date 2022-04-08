@@ -21,4 +21,8 @@
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1150.38" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BaseLib\BaseLib.csproj" />
+  </ItemGroup>
+
 </Project>

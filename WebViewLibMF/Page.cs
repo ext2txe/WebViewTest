@@ -2,8 +2,9 @@
 using Microsoft.Web.WebView2.WinForms;
 using System.Diagnostics;
 using BaseLib;
+using System.IO;
 
-namespace WebViewLib
+namespace WebViewLibMF
 {
     public class Page
     {

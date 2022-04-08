@@ -8,6 +8,7 @@ namespace WebViewTest
 {
     public partial class Form1 : Form
     {
+        private WebViewSettings _settings;
         private Page _page;
         public Form1()
         {
@@ -20,17 +21,23 @@ namespace WebViewTest
             int step = 10;
             try
             {
-                _page = new Page(wv);
+                _settings = new WebViewSettings();
                 step = 20;
-                _page.StatusMessageHandler = Status;
+                _page = new Page(wv);
                 step = 30;
-                _page.SaveFolder = @"C:\Users\joe\Desktop\folder\images\discord";
+                _page.StatusMessageHandler = Status;
                 step = 40;
-                textImageSaveFolder.Text = _page.SaveFolder;
+                string userDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 step = 50;
-                Environment.CurrentDirectory = _page.SaveFolder;
+                string saveFolder = "{userDesktop}\\folder\\images\\webviewtest";
                 step = 60;
-                Status($"Set currentDirectory to {_page.SaveFolder}");
+                if (!Directory.Exists(saveFolder)) Directory.CreateDirectory(saveFolder);
+                step = 70;
+                textImageSaveFolder.Text = saveFolder;
+                step = 80;
+                Environment.CurrentDirectory = saveFolder;
+                step = 90;
+                Status($"Set currentDirectory to {saveFolder}");
             }
             catch (Exception ex)
             {
@@ -155,6 +162,14 @@ namespace WebViewTest
         {
             Debug.WriteLine("Info: MSG (JSON): " + e.WebMessageAsJson);
             Debug.WriteLine("Info: MSG (String): " + e.TryGetWebMessageAsString());
+        }
+
+        private void BtnNavigateToUpwork_Click(object sender, EventArgs e)
+        {
+            textUrl.Text = textUpworkUrl.Text;
+            textUrl.Refresh();
+            btnGo_Click(sender, e);
+            BtnGetTitle_Click(sender, e);
         }
     }
 }
