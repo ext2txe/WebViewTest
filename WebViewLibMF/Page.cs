@@ -1,8 +1,11 @@
 ﻿using Microsoft.Web.WebView2.Core;
-using Microsoft.Web.WebView2.WinForms;
+using Microsoft.Web.WebView2.Wpf;
 using System.Diagnostics;
-using BaseLib;
 using System.IO;
+using System.Threading.Tasks;
+using System;
+using BaseLib;
+using System.Windows.Forms;
 
 namespace WebViewLibMF
 {
@@ -42,7 +45,7 @@ namespace WebViewLibMF
         /// <param name="message"></param>
         protected void StupidDoNothingMethod(string message) {}
 
-        public Page(WebView2 webView)
+        public Page(Microsoft.Web.WebView2.Wpf.WebView2 webView)
         {
             _wv = webView;
             StatusMessageHandler = StupidDoNothingMethod;
@@ -91,23 +94,23 @@ namespace WebViewLibMF
             }
         }
 
-        private void SourceChanged(object? sender, CoreWebView2SourceChangedEventArgs e)
+        private void SourceChanged(object sender, CoreWebView2SourceChangedEventArgs e)
         {
             Status($"SourceChanged");
         }
 
-        private void ContentLoading(object? sender, CoreWebView2ContentLoadingEventArgs e)
+        private void ContentLoading(object sender, CoreWebView2ContentLoadingEventArgs e)
         {
             Status($"ContentLoading");
 
         }
 
-        private void HistoryChanged(object? sender, object e)
+        private void HistoryChanged(object sender, object e)
         {
             Status($"HistoryChanged");
         }
 
-        private void EnsureHttps(object? sender, CoreWebView2NavigationStartingEventArgs e)
+        private void EnsureHttps(object sender, CoreWebView2NavigationStartingEventArgs e)
         {
             String uri = e.Uri;
             if (!uri.StartsWith("https://"))
@@ -139,7 +142,7 @@ namespace WebViewLibMF
             return _wv.CoreWebView2.DocumentTitle;
         }
 
-        private void NavigationCompleted(object? sender, CoreWebView2NavigationCompletedEventArgs e)
+        private void NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
         {
             string err = $"{e.WebErrorStatus}";
             Status($"NavigationCompleted {err}");

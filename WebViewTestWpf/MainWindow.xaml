@@ -70,7 +70,7 @@
                 <TabControl>
                     <TabItem Header="Discord" />
                     <TabItem Header="Upwork" />
-                    <TabItem Header="Settings">
+                    <TabItem Header="Settings" Height="22" Margin="-2,-2,-2,0" VerticalAlignment="Top">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="30" />
@@ -84,7 +84,12 @@
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="0" Content="Image Save Folder" HorizontalAlignment="Right"  Padding="2" Margin="2" />
                             <TextBox Grid.Column="1" Name="txtImageSaveFolder" TextChanged="txtUrl_TextChanged" Padding="2" Margin="2" />
-                            <Button Grid.Column="2" Content="Go!" Click="GoButton_Click" Padding="2" Margin="2" />
+                            <Button Grid.Column="2" Content=".." Click="BtnSelectImageSaveFolder_Click" Padding="2" Margin="2" />
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Log" Height="22" Margin="-2,-2,-2,0" VerticalAlignment="Top">
+                        <Grid>
+                            <TextBox Grid.Column="1" Name="txtLog" IsReadOnly="True" TextChanged="txtUrl_TextChanged" Padding="2" Margin="2" />
                         </Grid>
                     </TabItem>
                 </TabControl>
@@ -106,6 +111,12 @@
             <Label Grid.Column="0"
                    Content="Status:"
                    HorizontalAlignment="Right" />
+
+            <TextBox 
+                Grid.Column="1"
+                Name="txtStatus"
+                IsReadOnly="True"
+                HorizontalAlignment="Stretch" />
 
             <Label Grid.Column="2"
                    Content="HH:MM:SS"

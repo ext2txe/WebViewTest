@@ -2,10 +2,11 @@
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using WebViewLib;
+using WebViewLibMF;
 using System;
-using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
+using System.Windows.Threading;
 
 namespace WebViewTestWpf
 {
@@ -15,6 +16,7 @@ namespace WebViewTestWpf
     public partial class MainWindow : Window
     {
         private WebViewSettings _settings;
+        private WebViewLibMF.Page _page;
 
         public MainWindow()
         {
@@ -29,7 +31,7 @@ namespace WebViewTestWpf
             {
                 _settings = new WebViewSettings();
                 step = 20;
-                _page = new Page(wv);
+                _page = new WebViewLibMF.Page(wv);
                 step = 30;
                 _page.StatusMessageHandler = Status;
                 step = 40;
@@ -62,8 +64,37 @@ namespace WebViewTestWpf
 
         private void GoButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            _page.NavigateTo(txtUrl.Text);
+        }
 
+        private void Status(string msg)
+        {
+            string m = $"{DateTime.Now.ToString("yyyyMMdd hh:mm:ss.fff")} - {msg}";
+            txtStatus.Text = m;
+            txtLog.AppendText(m + Environment.NewLine);
+            txtLog.Refresh();
+        }
+
+        private void BtnSelectImageSaveFolder_Click(object sender, RoutedEventArgs e)
+        {
+            FolderBrowserDialog folder = new FolderBrowserDialog();
+            folder.SelectedPath = txtImageSaveFolder.Text;
+            if (folder.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                txtImageSaveFolder.Text = folder.SelectedPath;
+                txtImageSaveFolder.Refresh();
+            }
         }
     }
+
+    /// Extension class to implement Refresh() for UIElements
+    public static class ExtensionMethods
+    {
+        private static Action EmptyDelegate = delegate { };
+        public static void Refresh(this UIElement uiElement)
+        {
+            uiElement.Dispatcher.Invoke(DispatcherPriority.Render, EmptyDelegate);
+        }
+    }
+
 }

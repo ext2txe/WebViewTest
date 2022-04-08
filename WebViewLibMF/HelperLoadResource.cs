@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System;
+using System.IO;
+using System.Reflection;
 using System.Text;
 
 
@@ -42,7 +44,7 @@ namespace WebViewLibMF
                 }
 
                 //if not found, throw exception
-                if (String.IsNullOrEmpty(fqResourceName))
+                if (string.IsNullOrEmpty(fqResourceName))
                 {
                     throw new Exception($"Resource '{filename}' not found.");
                 }
