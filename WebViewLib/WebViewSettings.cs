@@ -1,4 +1,4 @@
-﻿using BaseLib;
+﻿using Framework;
 
 namespace WebViewLib
 {

@@ -106,10 +106,6 @@
       <Project>{262f1bfc-7ac0-46d4-b88f-bea719bd4f8d}</Project>
       <Name>BaseLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SysWin\SysWin.csproj">
-      <Project>{569162ae-666f-4b77-9d8b-c66c1796c8e0}</Project>
-      <Name>SysWin</Name>
-    </ProjectReference>
     <ProjectReference Include="..\WebViewLibMF\WebViewLibMF.csproj">
       <Project>{2e75b42d-7948-4052-8409-4d6ca98cde77}</Project>
       <Name>WebViewLibMF</Name>

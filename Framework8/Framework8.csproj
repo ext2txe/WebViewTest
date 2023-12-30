@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+	  <UseWindowsForms>true</UseWindowsForms>
+	  <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\dotNetFramework\Framework\ApiHelper.cs" Link="ApiHelper.cs" />
+    <Compile Include="..\..\dotNetFramework\Framework\BaseProject.cs" Link="BaseProject.cs" />
+    <Compile Include="..\..\dotNetFramework\Framework\BaseSettings.cs" Link="BaseSettings.cs" />
+    <Compile Include="..\..\dotNetFramework\Framework\BaseUtils.cs" Link="BaseUtils.cs" />
+    <Compile Include="..\..\dotNetFramework\Framework\BitmapUtils.cs" Link="BitmapUtils.cs" />
+    <Compile Include="..\..\dotNetFramework\Framework\CursorUtils.cs" Link="CursorUtils.cs" />
+    <Compile Include="..\..\dotNetFramework\Framework\Delegates.cs" Link="Delegates.cs" />
+    <Compile Include="..\..\dotNetFramework\Framework\Display.cs" Link="Display.cs" />
+    <Compile Include="..\..\dotNetFramework\Framework\DisplayInfo.cs" Link="DisplayInfo.cs" />
+    <Compile Include="..\..\dotNetFramework\Framework\GenUtils.MouseKbd.cs" Link="GenUtils.MouseKbd.cs" />
+    <Compile Include="..\..\dotNetFramework\Framework\INIFile.cs" Link="INIFile.cs" />
+    <Compile Include="..\..\dotNetFramework\Framework\KeyboardHook.cs" Link="KeyboardHook.cs" />
+    <Compile Include="..\..\dotNetFramework\Framework\Logger.cs" Link="Logger.cs" />
+    <Compile Include="..\..\dotNetFramework\Framework\PersistentSettings.cs" Link="PersistentSettings.cs" />
+    <Compile Include="..\..\dotNetFramework\Framework\PInvokeTypes.cs" Link="PInvokeTypes.cs" />
+    <Compile Include="..\..\dotNetFramework\Framework\Screenshot.cs" Link="Screenshot.cs" />
+    <Compile Include="..\..\dotNetFramework\Framework\Settings.cs" Link="Settings.cs" />
+    <Compile Include="..\..\dotNetFramework\Framework\SystemWindow.cs" Link="SystemWindow.cs" />
+    <Compile Include="..\..\dotNetFramework\Framework\Upload.cs" Link="Upload.cs" />
+    <Compile Include="..\..\dotNetFramework\Framework\WinUtils.cs" Link="WinUtils.cs" />
+  </ItemGroup>
+
+</Project>

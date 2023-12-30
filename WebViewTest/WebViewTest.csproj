@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-	  <UseWPF>true</UseWPF>
-    <Nullable>enable</Nullable>
+    <TargetFramework>net6.0-windows7.0</TargetFramework>
+    <UseWPF>True</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>enable</ImplicitUsings>
+	<Nullable>enable</Nullable>
+	<ImplicitUsings>enable</ImplicitUsings>
     <ApplicationIcon>cer.ico</ApplicationIcon>
     <AssemblyVersion>0.1.1</AssemblyVersion>
     <FileVersion>0.1.1</FileVersion>
@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BaseLib\BaseLib.csproj" />
+    <ProjectReference Include="..\Framework8\Framework8.csproj" />
     <ProjectReference Include="..\WebViewLib\WebViewLib.csproj" />
   </ItemGroup>
 
